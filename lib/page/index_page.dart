@@ -12,11 +12,13 @@ class IndexPage extends StatefulWidget {
 }
 
 class _IndexPageState extends State<IndexPage> {
+  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
+        currentIndex: _currentIndex,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -35,8 +37,15 @@ class _IndexPageState extends State<IndexPage> {
             title: Text("我的"),
           ),
         ],
+        onTap: (index) {
+          // print(index);
+          setState(() {
+            _currentIndex = index;
+          });
+        },
       ),
       body: IndexedStack(
+        index: _currentIndex,
         // 层布局控件 只显示一个
         children: <Widget>[
           HomePage(),
