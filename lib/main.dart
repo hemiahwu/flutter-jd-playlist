@@ -35,6 +35,7 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: MyFloatingActionButton(),
     );
   }
 }
@@ -46,7 +47,7 @@ class MySpecialHeading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text("温度类型"),
+      child: Text("类型"),
     );
   }
 }
@@ -59,6 +60,22 @@ class MySpecialContent extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text("温度"),
+    );
+  }
+}
+
+class MyFloatingActionButton extends StatelessWidget {
+  const MyFloatingActionButton({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      backgroundColor: Colors.red,
+      onPressed: () {
+        // TODO: some event
+      },
+      tooltip: "改变温度类型",
+      child: Icon(Icons.change_history),
     );
   }
 }
