@@ -4,6 +4,9 @@ import 'package:jd_app/page/category_page.dart';
 import 'package:jd_app/page/cart_page.dart';
 import 'package:jd_app/page/user_page.dart';
 
+import 'package:provider/provider.dart';
+import 'package:jd_app/provider/bottom_navi_provider.dart';
+
 class IndexPage extends StatefulWidget {
   IndexPage({Key key}) : super(key: key);
 
@@ -15,8 +18,9 @@ class _IndexPageState extends State<IndexPage> {
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
+    return Scaffold(bottomNavigationBar:
+        Consumer<BottomNaviProvider>(builder: (_, mProvider, __) {
+      return BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
         items: <BottomNavigationBarItem>[
@@ -39,13 +43,15 @@ class _IndexPageState extends State<IndexPage> {
         ],
         onTap: (index) {
           // print(index);
-          setState(() {
-            _currentIndex = index;
-          });
+          // setState(() {
+          //   _currentIndex = index;
+          // });
+          mProvider.changeBottomNaviIndex(index);
         },
-      ),
-      body: IndexedStack(
-        index: _currentIndex,
+      );
+    }), body: Consumer<BottomNaviProvider>(builder: (_, mProvider, __) {
+      return IndexedStack(
+        index: mProvider.bottomNaviIndex,
         // 层布局控件 只显示一个
         children: <Widget>[
           HomePage(),
@@ -53,7 +59,7 @@ class _IndexPageState extends State<IndexPage> {
           CartPage(),
           UserPage(),
         ],
-      ),
-    );
+      );
+    }));
   }
 }
