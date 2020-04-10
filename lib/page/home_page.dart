@@ -35,10 +35,12 @@ class _HomePageState extends State<HomePage> {
               child: Consumer<HomePageProvider>(
                 builder: (_, provider, __) {
                   print(provider.isLoading);
+                  // 加载动画
                   if (provider.isLoading) {
                     return Center(child: CupertinoActivityIndicator());
                   }
 
+// 捕获异常
                   if (provider.isError) {
                     return Center(
                         child: Column(
