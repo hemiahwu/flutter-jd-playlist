@@ -30,20 +30,6 @@ class _HomePageState extends State<HomePage> {
               title: Text("首页"),
             ),
             body: Container(
-<<<<<<< HEAD
-              color: Color(0xFFf4f4f4),
-              child: Consumer<HomePageProvider>(builder: (_, provider, __) {
-                // print(provider.isLoading);
-                // 加载动画
-                if (provider.isLoading) {
-                  return Center(child: CupertinoActivityIndicator());
-                }
-
-                // 捕获异常
-                if (provider.isError) {
-                  return Center(
-                    child: Column(
-=======
               color: Color(0xFFf7f7f7),
               child: Consumer<HomePageProvider>(
                 builder: (_, provider, __) {
@@ -57,7 +43,6 @@ class _HomePageState extends State<HomePage> {
                   if (provider.isError) {
                     return Center(
                         child: Column(
->>>>>>> lesson-10
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(provider.errorMsg),
@@ -68,14 +53,6 @@ class _HomePageState extends State<HomePage> {
                           },
                         )
                       ],
-<<<<<<< HEAD
-                    ),
-                  );
-                }
-
-                return Container();
-              }),
-=======
                     ));
                   }
 
@@ -102,7 +79,6 @@ class _HomePageState extends State<HomePage> {
                   // return Container();
                 },
               ),
->>>>>>> lesson-10
             )));
   }
 }
