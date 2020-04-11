@@ -1,6 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jd_app/config/jd_api.dart';
-import 'package:jd_app/net/net_request.dart';
 import 'package:jd_app/provider/home_page_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -27,9 +26,36 @@ class _HomePageState extends State<HomePage> {
             appBar: AppBar(
               title: Text("首页"),
             ),
-            body: Consumer<HomePageProvider>(builder: (_, provider, __) {
-              return Container();
-            })));
+            body: Container(
+              color: Color(0xFFf4f4f4),
+              child: Consumer<HomePageProvider>(builder: (_, provider, __) {
+                // print(provider.isLoading);
+                // 加载动画
+                if (provider.isLoading) {
+                  return Center(child: CupertinoActivityIndicator());
+                }
+
+                // 捕获异常
+                if (provider.isError) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(provider.errorMsg),
+                        OutlineButton(
+                          child: Text("刷新"),
+                          onPressed: () {
+                            provider.loadHomePageData();
+                          },
+                        )
+                      ],
+                    ),
+                  );
+                }
+
+                return Container();
+              }),
+            )));
   }
 }
 
