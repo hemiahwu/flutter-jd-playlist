@@ -69,13 +69,29 @@ class _HomePageState extends State<HomePage> {
                       // 掌上秒杀头部
                       buildMSHeaderContainer(),
                       // 掌上秒杀商品
-                      buildMSBodyContainer(model)
+                      buildMSBodyContainer(model),
+                      // 广告
+                      buildAds(model.pageRow.ad1),
+                      buildAds(model.pageRow.ad2),
                     ],
                   );
                   // return Container();
                 },
               ),
             )));
+  }
+
+  Widget buildAds(List<String> ads) {
+    List<Widget> list = List<Widget>();
+    for (var i = 0; i < ads.length; i++) {
+      list.add(Expanded(
+        child: Image.asset("assets${ads[i]}"),
+      ));
+    }
+
+    return Row(
+      children: list,
+    );
   }
 
   // 掌上秒杀商品
