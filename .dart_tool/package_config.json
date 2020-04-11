@@ -68,6 +68,18 @@
       "languageVersion": "2.2"
     },
     {
+      "name": "flutter_page_indicator",
+      "rootUri": "file:///Users/wuhaiyang/Documents/development/flutter/.pub-cache/hosted/pub.flutter-io.cn/flutter_page_indicator-0.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "flutter_swiper",
+      "rootUri": "file:///Users/wuhaiyang/Documents/development/flutter/.pub-cache/hosted/pub.flutter-io.cn/flutter_swiper-1.1.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///Users/wuhaiyang/Documents/development/flutter/packages/flutter_test",
       "packageUri": "lib/",
@@ -176,6 +188,12 @@
       "languageVersion": "2.2"
     },
     {
+      "name": "transformer_page_view",
+      "rootUri": "file:///Users/wuhaiyang/Documents/development/flutter/.pub-cache/hosted/pub.flutter-io.cn/transformer_page_view-0.1.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
       "name": "typed_data",
       "rootUri": "file:///Users/wuhaiyang/Documents/development/flutter/.pub-cache/hosted/pub.flutter-io.cn/typed_data-1.1.6",
       "packageUri": "lib/",
@@ -200,7 +218,7 @@
       "languageVersion": "2.1"
     }
   ],
-  "generated": "2020-04-11T07:51:17.742539Z",
+  "generated": "2020-04-11T07:52:46.884887Z",
   "generator": "pub",
   "generatorVersion": "2.8.0-dev.0.0.flutter-aa6709974d"
 }

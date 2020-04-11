@@ -1,4 +1,0 @@
-#Tue Dec 24 16:23:19 CST 2019
-base.0=/Users/wuhaiyang/Desktop/projects/jd_app/build/app/intermediates/transforms/dexMerger/debug/0
-path.0=classes.dex
-renamed.0=classes.dex

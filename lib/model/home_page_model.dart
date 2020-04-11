@@ -1,36 +1,12 @@
 class HomePageModel {
-  int code;
-  String msg;
-  Data data;
-
-  HomePageModel({this.code, this.msg, this.data});
-
-  HomePageModel.fromJson(Map<String, dynamic> json) {
-    code = json['code'];
-    msg = json['msg'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['msg'] = this.msg;
-    if (this.data != null) {
-      data['data'] = this.data.toJson();
-    }
-    return data;
-  }
-}
-
-class Data {
   List<Swipers> swipers;
   List<Logos> logos;
   List<Quicks> quicks;
   PageRow pageRow;
 
-  Data({this.swipers, this.logos, this.quicks, this.pageRow});
+  HomePageModel({this.swipers, this.logos, this.quicks, this.pageRow});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  HomePageModel.fromJson(Map<String, dynamic> json) {
     if (json['swipers'] != null) {
       swipers = new List<Swipers>();
       json['swipers'].forEach((v) {
