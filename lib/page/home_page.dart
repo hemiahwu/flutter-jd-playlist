@@ -66,12 +66,70 @@ class _HomePageState extends State<HomePage> {
                       buildAspectRatio(model),
                       // 图标分类
                       buildLogos(model),
+                      // 掌上秒杀头部
+                      buildMSHeaderContainer(),
+                      // 掌上秒杀商品
+                      buildMSBodyContainer(model)
                     ],
                   );
                   // return Container();
                 },
               ),
             )));
+  }
+
+  // 掌上秒杀商品
+  Container buildMSBodyContainer(HomePageModel model) {
+    return Container(
+      height: 120,
+      color: Colors.white,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: model.quicks.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Column(
+                children: <Widget>[
+                  Image.asset(
+                    "assets${model.quicks[index].image}",
+                    width: 85,
+                    height: 85,
+                  ),
+                  Text(
+                    "${model.quicks[index].price}",
+                    style: TextStyle(color: Colors.red, fontSize: 16.0),
+                  )
+                ],
+              ),
+            );
+          }),
+    );
+  }
+
+  // 掌上秒杀头部
+  Container buildMSHeaderContainer() {
+    return Container(
+      margin: const EdgeInsets.only(top: 10.0),
+      padding: const EdgeInsets.all(10.0),
+      color: Colors.white,
+      height: 50,
+      child: Row(
+        children: <Widget>[
+          Image.asset(
+            "assets/image/bej.png",
+            width: 90,
+            height: 20,
+          ),
+          Spacer(),
+          Text("更多秒杀"),
+          Icon(
+            CupertinoIcons.right_chevron,
+            size: 14,
+          )
+        ],
+      ),
+    );
   }
 
   // 图标分类
