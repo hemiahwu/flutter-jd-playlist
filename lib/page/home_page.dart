@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jd_app/provider/home_page_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
+
+import '../model/home_page_model.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -53,7 +56,27 @@ class _HomePageState extends State<HomePage> {
                     ));
                   }
 
-                  return Container();
+                  HomePageModel model = provider.model;
+                  print(model.toJson());
+
+                  return ListView(
+                    children: <Widget>[
+                      AspectRatio(
+                        aspectRatio: 72 / 35,
+                        child: Swiper(
+                          itemCount: model.swipers.length,
+                          pagination: SwiperPagination(),
+                          autoplay: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            //assets/image/jd1.jpg
+                            return Image.asset(
+                                "assets${model.swipers[index].image}");
+                          },
+                        ),
+                      )
+                    ],
+                  );
+                  // return Container();
                 },
               ),
             )));

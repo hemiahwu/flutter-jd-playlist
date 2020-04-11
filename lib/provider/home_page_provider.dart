@@ -3,6 +3,8 @@ import 'package:jd_app/config/jd_api.dart';
 import 'package:jd_app/model/home_page_model.dart';
 import 'package:jd_app/net/net_request.dart';
 
+import '../model/home_page_model.dart';
+
 class HomePageProvider with ChangeNotifier {
   HomePageModel model;
   bool isLoading = false;
@@ -16,8 +18,9 @@ class HomePageProvider with ChangeNotifier {
     NetRequest().reqeustData(JdApi.HOME_PAGE).then((res) {
       isLoading = false;
       if (res.code == 200) {
-        print(res.data);
+        // print(res.data);
         model = HomePageModel.fromJson(res.data);
+        // print(model.toJson());
       }
       notifyListeners();
     }).catchError((error) {
