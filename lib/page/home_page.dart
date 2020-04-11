@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:jd_app/provider/home_page_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
-import '../model/home_page_model.dart';
 import '../model/home_page_model.dart';
 
 class HomePage extends StatefulWidget {
@@ -66,12 +66,65 @@ class _HomePageState extends State<HomePage> {
                       buildAspectRatio(model),
                       // 图标分类
                       buildLogos(model),
+                      // 秒杀
+                      buildSellContainer(),
+                      // 商品横向列表
+                      Container(
+                          height: 120,
+                          color: Colors.white,
+                          child: ListView.builder(
+                              itemCount: model.quicks.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Image.asset(
+                                        "assets${model.quicks[index].image}",
+                                        width: 85,
+                                        height: 85,
+                                      ),
+                                      Text(
+                                        "${model.quicks[index].price}",
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 16.0),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              })),
                     ],
                   );
                   // return Container();
                 },
               ),
             )));
+  }
+
+  // 掌上秒杀的头部
+  Container buildSellContainer() {
+    return Container(
+      margin: const EdgeInsets.only(top: 10.0),
+      padding: const EdgeInsets.all(10.0),
+      color: Colors.white,
+      height: 50,
+      child: Row(
+        children: <Widget>[
+          Image.asset(
+            "assets/image/bej.png",
+            width: 90,
+            height: 20,
+          ),
+          Spacer(),
+          Text("更多秒杀"),
+          Icon(
+            CupertinoIcons.right_chevron,
+            size: 14,
+          )
+        ],
+      ),
+    );
   }
 
   // 图标分类
