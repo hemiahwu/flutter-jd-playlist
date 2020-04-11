@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 import '../model/home_page_model.dart';
+import '../model/home_page_model.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -61,25 +62,66 @@ class _HomePageState extends State<HomePage> {
 
                   return ListView(
                     children: <Widget>[
-                      AspectRatio(
-                        aspectRatio: 72 / 35,
-                        child: Swiper(
-                          itemCount: model.swipers.length,
-                          pagination: SwiperPagination(),
-                          autoplay: true,
-                          itemBuilder: (BuildContext context, int index) {
-                            //assets/image/jd1.jpg
-                            return Image.asset(
-                                "assets${model.swipers[index].image}");
-                          },
-                        ),
-                      )
+                      // 轮播图
+                      buildAspectRatio(model),
+                      // 图标分类
+                      buildLogos(model),
                     ],
                   );
                   // return Container();
                 },
               ),
             )));
+  }
+
+  // 图标分类
+  Widget buildLogos(HomePageModel model) {
+    // 定于list数组 列表容器
+    List<Widget> list = List<Widget>();
+
+    // 遍历model中的logos数组
+    for (var i = 0; i < model.logos.length; i++) {
+      list.add(Container(
+        width: 60.0,
+        child: Column(
+          children: <Widget>[
+            Image.asset(
+              "assets${model.logos[i].image}",
+              width: 50,
+              height: 50,
+            ),
+            Text("${model.logos[i].title}")
+          ],
+        ),
+      ));
+    }
+    return Container(
+      color: Colors.white,
+      height: 170,
+      padding: const EdgeInsets.all(10.0),
+      child: Wrap(
+        spacing: 7.0,
+        runSpacing: 10.0,
+        alignment: WrapAlignment.spaceBetween,
+        children: list,
+      ),
+    );
+  }
+
+  // 轮播图
+  AspectRatio buildAspectRatio(HomePageModel model) {
+    return AspectRatio(
+      aspectRatio: 72 / 35,
+      child: Swiper(
+        itemCount: model.swipers.length,
+        pagination: SwiperPagination(),
+        autoplay: true,
+        itemBuilder: (BuildContext context, int index) {
+          //assets/image/jd1.jpg
+          return Image.asset("assets${model.swipers[index].image}");
+        },
+      ),
+    );
   }
 }
 
