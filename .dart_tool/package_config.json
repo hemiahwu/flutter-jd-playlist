@@ -56,6 +56,12 @@
       "languageVersion": "2.0"
     },
     {
+      "name": "dio",
+      "rootUri": "file:///Users/wuhaiyang/Documents/development/flutter/.pub-cache/hosted/pub.flutter-io.cn/dio-3.0.9",
+      "packageUri": "lib/",
+      "languageVersion": "2.4"
+    },
+    {
       "name": "flutter",
       "rootUri": "file:///Users/wuhaiyang/Documents/development/flutter/packages/flutter",
       "packageUri": "lib/",
@@ -66,6 +72,12 @@
       "rootUri": "file:///Users/wuhaiyang/Documents/development/flutter/packages/flutter_test",
       "packageUri": "lib/",
       "languageVersion": "2.2"
+    },
+    {
+      "name": "http_parser",
+      "rootUri": "file:///Users/wuhaiyang/Documents/development/flutter/.pub-cache/hosted/pub.flutter-io.cn/http_parser-3.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.3"
     },
     {
       "name": "image",
@@ -188,7 +200,7 @@
       "languageVersion": "2.1"
     }
   ],
-  "generated": "2019-12-25T06:43:55.704799Z",
+  "generated": "2020-04-11T05:49:39.782730Z",
   "generator": "pub",
   "generatorVersion": "2.8.0-dev.0.0.flutter-aa6709974d"
 }
