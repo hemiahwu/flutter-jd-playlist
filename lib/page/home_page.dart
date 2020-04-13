@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 import '../model/home_page_model.dart';
-import '../model/home_page_model.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -34,7 +33,7 @@ class _HomePageState extends State<HomePage> {
               color: Color(0xFFf7f7f7),
               child: Consumer<HomePageProvider>(
                 builder: (_, provider, __) {
-                  print(provider.isLoading);
+                  // print(provider.isLoading);
                   // 加载动画
                   if (provider.isLoading) {
                     return Center(child: CupertinoActivityIndicator());
@@ -58,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                   }
 
                   HomePageModel model = provider.model;
-                  print(model.toJson());
+                  // print(model.toJson());
 
                   return ListView(
                     children: <Widget>[
