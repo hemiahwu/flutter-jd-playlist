@@ -52,7 +52,33 @@ class _CategoryPageState extends State<CategoryPage> {
                   ));
                 }
 
-                return Container();
+                return Row(
+                  children: <Widget>[
+                    Container(
+                      width: 90,
+                      child: ListView.builder(
+                          itemCount: provider.categoryNavList.length,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              child: Container(
+                                  height: 50.0,
+                                  padding: const EdgeInsets.only(top: 15),
+                                  color: Color(0xFFF8F8F8),
+                                  child: Text(
+                                    provider.categoryNavList[index],
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Color(0xFF333333),
+                                        fontWeight: FontWeight.w500),
+                                  )),
+                              onTap: () {
+                                print(index);
+                              },
+                            );
+                          }),
+                    )
+                  ],
+                );
               },
             ),
           ),
