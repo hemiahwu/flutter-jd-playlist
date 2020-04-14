@@ -27,7 +27,6 @@ class _CategoryPageState extends State<CategoryPage> {
               title: Text("分类"),
             ),
             body: Container(
-              color: Color(0xFFf7f7f7),
               child: Consumer<CategoryPageProvider>(
                 builder: (_, provider, __) {
                   // 加载动画
@@ -65,7 +64,9 @@ class _CategoryPageState extends State<CategoryPage> {
                                 child: Container(
                                     height: 50.0,
                                     padding: const EdgeInsets.only(top: 15),
-                                    color: Color(0xFFF8F8F8),
+                                    color: provider.tabIndex == index
+                                        ? Colors.white
+                                        : Color(0xFFF8F8F8),
                                     child: Text(
                                       provider.categoryNavList[index],
                                       textAlign: TextAlign.center,
@@ -74,7 +75,8 @@ class _CategoryPageState extends State<CategoryPage> {
                                           fontWeight: FontWeight.w500),
                                     )),
                                 onTap: () {
-                                  print(index);
+                                  // print(index);
+                                  provider.loadCategoryContentData(index);
                                 },
                               );
                             }),
