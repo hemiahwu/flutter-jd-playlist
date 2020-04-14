@@ -47,7 +47,7 @@ class CategoryPageProvider with ChangeNotifier {
         .reqeustData(JdApi.CATEGORY_CONTENT, data: data, method: "post")
         .then((res) {
       isLoading = false;
-      print(res.data);
+      // print(res.data);
       if (res.data is List) {
         for (var item in res.data) {
           CategoryContentModel tmpModel = CategoryContentModel.fromJson(item);
