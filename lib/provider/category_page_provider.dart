@@ -9,6 +9,7 @@ class CategoryPageProvider with ChangeNotifier {
   String errorMsg = "";
   List<String> categoryNavList = [];
   List<CategoryContentModel> categoryContentList = [];
+  int tabIndex = 0;
 
   // 分类左侧
   loadCategoryPageData() {
@@ -22,6 +23,7 @@ class CategoryPageProvider with ChangeNotifier {
         for (var i = 0; i < res.data.length; i++) {
           categoryNavList.add(res.data[i]);
         }
+        loadCategoryContentData(this.tabIndex);
       }
       notifyListeners();
     }).catchError((error) {
@@ -35,6 +37,7 @@ class CategoryPageProvider with ChangeNotifier {
 
   // 分类右侧
   loadCategoryContentData(int index) {
+    this.tabIndex = index;
     isLoading = true;
     categoryContentList.clear();
 
@@ -45,11 +48,12 @@ class CategoryPageProvider with ChangeNotifier {
         .then((res) {
       isLoading = false;
       print(res.data);
-      // if (res.data is List) {
-      //   for (var i = 0; i < res.data.length; i++) {
-      //     categoryNavList.add(res.data[i]);
-      //   }
-      // }
+      if (res.data is List) {
+        for (var item in res.data) {
+          CategoryContentModel tmpModel = CategoryContentModel.fromJson(item);
+          categoryContentList.add(tmpModel);
+        }
+      }
       notifyListeners();
     }).catchError((error) {
       print(error);
