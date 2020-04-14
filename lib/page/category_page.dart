@@ -32,7 +32,8 @@ class _CategoryPageState extends State<CategoryPage> {
               child: Consumer<CategoryPageProvider>(
                 builder: (_, provider, __) {
                   // 加载动画
-                  if (provider.isLoading) {
+                  if (provider.isLoading &&
+                      provider.categoryNavList.length == 0) {
                     return Center(child: CupertinoActivityIndicator());
                   }
 
@@ -60,7 +61,17 @@ class _CategoryPageState extends State<CategoryPage> {
                       // 分类左侧
                       buildNavLeftContainer(provider),
                       // 分类右侧
-                      buildCategoryContent(provider.categoryContentList)
+                      Expanded(
+                          child: Stack(
+                        children: <Widget>[
+                          buildCategoryContent(provider.categoryContentList),
+                          provider.isLoading
+                              ? Center(
+                                  child: CupertinoActivityIndicator(),
+                                )
+                              : Container()
+                        ],
+                      ))
                     ],
                   );
                 },
@@ -120,7 +131,7 @@ class _CategoryPageState extends State<CategoryPage> {
       ));
     }
     return Container(
-      width: 324,
+      width: double.infinity,
       color: Colors.white,
       child: ListView(
         children: list,
