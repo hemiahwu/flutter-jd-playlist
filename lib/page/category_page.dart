@@ -112,7 +112,7 @@ class _CategoryPageState extends State<CategoryPage> {
       list.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: Wrap(
-          spacing: 7.0,
+          spacing: 7.1,
           runSpacing: 10.0,
           alignment: WrapAlignment.start,
           children: descList,
