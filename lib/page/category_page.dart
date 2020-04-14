@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jd_app/model/category_content_model.dart';
+import 'package:jd_app/page/product_list_page.dart';
 import 'package:jd_app/provider/category_page_provider.dart';
+import 'package:jd_app/provider/product_list_provider.dart';
 import 'package:provider/provider.dart';
 
 class CategoryPage extends StatefulWidget {
@@ -115,6 +117,19 @@ class _CategoryPageState extends State<CategoryPage> {
           ),
           onTap: () {
             // 前往商品页面
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) =>
+                    ChangeNotifierProvider<ProductListProvider>(
+                        create: (context) {
+                      ProductListProvider provider = ProductListProvider();
+                      provider.loadProductList();
+                      return provider;
+                    }, child: Consumer<ProductListProvider>(
+                            builder: (_, provider, __) {
+                      return Container(
+                          child: ProductListPage(
+                              title: contentList[i].desc[j].text));
+                    }))));
           },
         ));
       }
