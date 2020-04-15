@@ -56,7 +56,7 @@ class _ProductListPageState extends State<ProductListPage> {
                         child: buildProductItem(model),
                         onTap: () {
                           // 前往商品详情页面
-                          // print(model.title);
+                          print(model.title);
                         },
                       );
                     });
