@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jd_app/model/product_info_model.dart';
+import 'package:jd_app/page/product_detail_page.dart';
+import 'package:jd_app/provider/product_detail_provider.dart';
 import 'package:jd_app/provider/product_list_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -56,6 +58,24 @@ class _ProductListPageState extends State<ProductListPage> {
                         child: buildProductItem(model),
                         onTap: () {
                           // 前往商品详情页面
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  ChangeNotifierProvider<ProductDetailProvider>(
+                                    create: (context) {
+                                      ProductDetailProvider provider =
+                                          ProductDetailProvider();
+                                      provider.loadProductList(id: model.id);
+                                      return provider;
+                                    },
+                                    child: Consumer<ProductDetailProvider>(
+                                      builder: (_, provider, __) {
+                                        return Container(
+                                          child:
+                                              ProductDetailPage(id: model.id),
+                                        );
+                                      },
+                                    ),
+                                  )));
                           // print(model.title);
                         },
                       );
