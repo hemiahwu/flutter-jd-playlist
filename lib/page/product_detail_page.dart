@@ -170,6 +170,147 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         ),
         onTap: () {
           // 选择商品个数
+          showModalBottomSheet(
+              backgroundColor: Colors.transparent,
+              context: context,
+              builder: (BuildContext context) {
+                return Stack(
+                  children: <Widget>[
+                    // 设置容器背景
+                    Container(
+                      margin: EdgeInsets.only(top: 20),
+                      width: double.infinity,
+                      height: double.infinity,
+                      color: Colors.white,
+                    ),
+                    // 顶部的图片, 价格, 和 商量信息
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(left: 20, right: 20),
+                          child: Image.asset(
+                            "assets${model.partData.loopImgUrl[0]}",
+                            width: 90,
+                            height: 90,
+                          ),
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.min, // 感觉没啥用
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            SizedBox(height: 30),
+                            Text(
+                              "¥${model.partData.price}",
+                              style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFFE93B3D)),
+                            ),
+                            SizedBox(height: 10),
+                            Text("已选 ${model.partData.count}件")
+                          ],
+                        ),
+                        Spacer(),
+                        Container(
+                          margin: EdgeInsets.only(top: 20),
+                          child: IconButton(
+                            icon: Icon(Icons.close),
+                            iconSize: 20,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                    // 中间的数量选择
+                    Container(
+                      margin: EdgeInsets.only(top: 90.0, bottom: 50.0),
+                      padding:
+                          EdgeInsets.only(top: 40.0, left: 15.0, right: 15.0),
+                      child: Row(
+                        children: <Widget>[
+                          Text("数量"),
+                          Spacer(),
+                          InkWell(
+                            child: Container(
+                              width: 35,
+                              height: 35,
+                              color: Color(0xFFF7F7F7),
+                              child: Center(
+                                child: Text(
+                                  "-",
+                                  style: TextStyle(
+                                      fontSize: 18.0,
+                                      color: model.partData.count == 1
+                                          ? Color(0xFFB0B0B0)
+                                          : Colors.black),
+                                ),
+                              ),
+                            ),
+                            onTap: () {
+                              // 减少个数
+                            },
+                          ),
+                          SizedBox(
+                            width: 2,
+                          ),
+                          Container(
+                              width: 35,
+                              height: 35,
+                              child: Center(
+                                child: Text("${model.partData.count}"),
+                              )),
+                          SizedBox(
+                            width: 2,
+                          ),
+                          InkWell(
+                            child: Container(
+                              width: 35,
+                              height: 35,
+                              color: Color(0xFFF7F7F7),
+                              child: Center(
+                                child: Text(
+                                  "+",
+                                  style: TextStyle(fontSize: 18.0),
+                                ),
+                              ),
+                            ),
+                            onTap: () {
+                              // 加数量
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+
+                    // 底部的按钮栏
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: InkWell(
+                        child: Container(
+                          height: 50.0,
+                          color: Color(0xFFE93B3D),
+                          alignment: Alignment.center,
+                          child: Text(
+                            "加入购物车",
+                            style: TextStyle(
+                                fontSize: 15.0,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        onTap: () {
+                          // 加入购物车
+                        },
+                      ),
+                    )
+                  ],
+                );
+              });
         },
       ),
     );
