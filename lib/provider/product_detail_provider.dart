@@ -34,4 +34,22 @@ class ProductDetailProvider with ChangeNotifier {
       notifyListeners();
     });
   }
+
+  // 切换分期模式
+  void changeBaitiaoSeleted(int index) {
+    List<Baitiao> list = [];
+    if (this.model.baitiao[index] == false) {
+      for (int i = 0; i < this.model.baitiao.length; i++) {
+        if (i == index) {
+          this.model.baitiao[i].select = true;
+        } else {
+          this.model.baitiao[i].select = false;
+        }
+        list.add(this.model.baitiao[i]);
+      }
+      this.model.baitiao.clear();
+      this.model.baitiao.addAll(list);
+      notifyListeners();
+    }
+  }
 }

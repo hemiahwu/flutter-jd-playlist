@@ -69,7 +69,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     buildPriceContainer(model),
 
                     // 白条支付
-                    buildPayContainer(context, baitiaoTitle, model),
+                    buildPayContainer(context, baitiaoTitle, model, provider),
 
                     // 商品件数
                     buildCountContainer(model),
@@ -175,8 +175,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     );
   }
 
-  Container buildPayContainer(
-      BuildContext context, String baitiaoTitle, ProductDetailModel model) {
+  Container buildPayContainer(BuildContext context, String baitiaoTitle,
+      ProductDetailModel model, ProductDetailProvider provider) {
     return Container(
       padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
@@ -204,115 +204,126 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         onTap: () {
           // 选择支付方式 白条支付 分期
           // print(baitiaoTitle);
-          showBaitiao(context, model);
+          showBaitiao(context, model, provider);
         },
       ),
     );
   }
 
-  Future showBaitiao(BuildContext context, ProductDetailModel model) {
+  Future showBaitiao(BuildContext context, ProductDetailModel model,
+      ProductDetailProvider provider) {
     return showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return Stack(
-            children: <Widget>[
-              // 顶部标题栏
-              Stack(
-                children: <Widget>[
-                  Container(
-                    width: double.infinity,
-                    height: 40.0,
-                    color: Color(0xFFF3F2F8),
-                    child: Center(
-                      child: Text(
-                        "打白条购买",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    width: 40.0,
-                    height: 40.0,
-                    child: Center(
-                      child: IconButton(
-                        icon: Icon(Icons.close),
-                        iconSize: 20,
-                        onPressed: () {
-                          // 关闭
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
-                  )
-                ],
-              ),
-
-              // 主体列表
-              Container(
-                margin: EdgeInsets.only(top: 40.0, bottom: 50.0),
-                child: ListView.builder(
-                    itemCount: model.baitiao.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        child: Row(
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                              child: Image.asset(
-                                "assets/image/unselect.png",
-                                width: 20,
-                                height: 20,
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text("${model.baitiao[index].desc}"),
-                                  Text("${model.baitiao[index].tip}"),
-                                ],
-                              ),
-                            )
-                          ],
+          return ChangeNotifierProvider<ProductDetailProvider>.value(
+            value: provider,
+            child: Stack(
+              children: <Widget>[
+                // 顶部标题栏
+                Stack(
+                  children: <Widget>[
+                    Container(
+                      width: double.infinity,
+                      height: 40.0,
+                      color: Color(0xFFF3F2F8),
+                      child: Center(
+                        child: Text(
+                          "打白条购买",
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        onTap: () {
-                          // 选择分期类型
-                        },
-                      );
-                    }),
-              ),
-
-              // 底部的按钮
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: InkWell(
-                  child: Container(
-                    width: double.infinity,
-                    height: 50.0,
-                    color: Color(0xFFE4393C),
-                    child: Center(
-                      child: Text(
-                        "立即打白条",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold),
                       ),
                     ),
-                  ),
-                  onTap: () {
-                    // 确定分期并返回
-                    Navigator.pop(context);
-                  },
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      width: 40.0,
+                      height: 40.0,
+                      child: Center(
+                        child: IconButton(
+                          icon: Icon(Icons.close),
+                          iconSize: 20,
+                          onPressed: () {
+                            // 关闭
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-              )
-            ],
+
+                // 主体列表
+                Container(
+                  margin: EdgeInsets.only(top: 40.0, bottom: 50.0),
+                  child: ListView.builder(
+                      itemCount: model.baitiao.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          child: Row(
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                                child: Consumer<ProductDetailProvider>(
+                                  builder: (_, tmpProvider, __) {
+                                    return Image.asset(
+                                      tmpProvider.model.baitiao[index].select
+                                          ? "assets/image/selected.png"
+                                          : "assets/image/unselect.png",
+                                      width: 20,
+                                      height: 20,
+                                    );
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 8.0, bottom: 8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text("${model.baitiao[index].desc}"),
+                                    Text("${model.baitiao[index].tip}"),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                          onTap: () {
+                            // 选择分期类型
+                            provider.changeBaitiaoSeleted(index);
+                          },
+                        );
+                      }),
+                ),
+
+                // 底部的按钮
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: InkWell(
+                    child: Container(
+                      width: double.infinity,
+                      height: 50.0,
+                      color: Color(0xFFE4393C),
+                      child: Center(
+                        child: Text(
+                          "立即打白条",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    onTap: () {
+                      // 确定分期并返回
+                      Navigator.pop(context);
+                    },
+                  ),
+                )
+              ],
+            ),
           );
         });
   }
