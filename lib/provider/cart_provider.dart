@@ -22,10 +22,11 @@ class CartProvider with ChangeNotifier {
     // prefs.setStringList("cartInfo", list);
 
     // 先把缓存里的数据取出来
-    List<String> list = prefs.getStringList("cartInfo");
+    List<String> list = [];
+    list.addAll(prefs.getStringList("cartInfo"));
 
     // 判断出去来的list有没有东西
-    if (list == null) {
+    if (list.length == 0) {
       // print("缓存里没有任何商品数据");
       // 将传过来的数据放到数组中
       list.add(json.encode(data.toJson()));
@@ -37,6 +38,7 @@ class CartProvider with ChangeNotifier {
       notifyListeners();
     } else {
       // print("缓存中有商品数据");
+      List<String> tmpList = [];
       // 判断缓存中是否有对应的商品
       bool isUpdated = false;
       // 遍历缓存数组
@@ -50,20 +52,32 @@ class CartProvider with ChangeNotifier {
           isUpdated = true;
         }
         // 放到数组中
-        list.add(json.encode(tmpData.toJson()));
+        String tmpDataStr = json.encode(tmpData.toJson());
+        tmpList.add(tmpDataStr);
+        models.add(tmpData);
       }
 
       // 如果缓存里没有这个商品,那么直接添加
       if (isUpdated == false) {
-        list.add(json.encode(data.toJson()));
+        String str = json.encode(data.toJson());
+        tmpList.add(str);
         models.add(data);
       }
 
       // 存入缓存
-      prefs.setStringList("cartInfo", list);
+      prefs.setStringList("cartInfo", tmpList);
 
       // 通知听众
       notifyListeners();
     }
+  }
+
+  // 获取购物车商品数量
+  int getAllCount() {
+    int count = 0;
+    for (PartData data in this.models) {
+      count += data.count;
+    }
+    return count;
   }
 }
