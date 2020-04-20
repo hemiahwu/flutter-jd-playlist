@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:jd_app/model/product_detail_model.dart';
+import 'package:jd_app/provider/bottom_navi_provider.dart';
+import 'package:jd_app/provider/cart_provider.dart';
 import 'package:jd_app/provider/product_detail_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -72,12 +75,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     buildPayContainer(context, baitiaoTitle, model, provider),
 
                     // 商品件数
-                    buildCountContainer(model, provider),
+                    buildCountContainer(context, model, provider),
                   ],
                 ),
 
                 // 底部菜单栏
-                buildbottomPositioned()
+                buildbottomPositioned(context, model)
               ],
             );
           },
@@ -86,7 +89,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     );
   }
 
-  Positioned buildbottomPositioned() {
+  Positioned buildbottomPositioned(
+      BuildContext context, ProductDetailModel model) {
     return Positioned(
       left: 0,
       right: 0,
@@ -105,7 +109,35 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Icon(Icons.shopping_cart),
+                      Stack(
+                        children: <Widget>[
+                          Container(
+                              width: 40,
+                              height: 30,
+                              child: Icon(Icons.shopping_cart)),
+                          Consumer<CartProvider>(
+                              builder: (_, cartProvider, __) {
+                            return Positioned(
+                              right: 0.0,
+                              child: cartProvider.getAllCount() > 0
+                                  ? Container(
+                                      padding: EdgeInsets.all(2.0),
+                                      decoration: BoxDecoration(
+                                          color: Colors.red,
+                                          borderRadius:
+                                              BorderRadius.circular(11.0)),
+                                      child: Text(
+                                        "${cartProvider.getAllCount()}",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 11.0),
+                                      ),
+                                    )
+                                  : Container(),
+                            );
+                          })
+                        ],
+                      ),
                       Text(
                         "购物车",
                         style: TextStyle(fontSize: 13.0),
@@ -115,6 +147,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
                 onTap: () {
                   // 购物车
+                  // 先回到顶层
+                  Navigator.popUntil(context, ModalRoute.withName("/"));
+                  // 跳转到购物车
+                  Provider.of<BottomNaviProvider>(context, listen: false)
+                      .changeBottomNaviIndex(2);
                 },
               ),
             ),
@@ -134,6 +171,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
                 onTap: () {
                   // 加入购物车
+                  Provider.of<CartProvider>(context).addToCart(model.partData);
+                  Fluttertoast.showToast(
+                      msg: "成功加入购物车",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                      fontSize: 16.0);
                 },
               ),
             )
@@ -143,8 +186,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     );
   }
 
-  Container buildCountContainer(
-      ProductDetailModel model, ProductDetailProvider provider) {
+  Container buildCountContainer(BuildContext context, ProductDetailModel model,
+      ProductDetailProvider provider) {
     return Container(
       padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
@@ -317,6 +360,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           ),
                           onTap: () {
                             // 加入购物车
+                            Provider.of<CartProvider>(context)
+                                .addToCart(model.partData);
+                            Navigator.pop(context);
                           },
                         ),
                       )
